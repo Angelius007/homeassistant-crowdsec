@@ -8,13 +8,17 @@ Liste des personnalisations proposées pour home assistant, nginx et crowdsec po
 flowchart LR
 
 A((Internet))
-A --> B1[Box Internet]
-B1 -.-> B2[Eventuel routeur intermédiaire]
+
+A --> B1[Internet Box / ISP Router]
+B1 -. Optional .-> B2[Intermediate Router / Firewall]
+
 B1 --> C[Nginx Proxy Manager]
-B2 -.-> C[Nginx Proxy Manager]
-C --> D[CrowdSec]
-D --> E[Firewall Bounce]
-E --> F{{Home Assistant}}
+B2 -. Optional .-> C
+
+C --> |Logs| D[CrowdSec Engine]
+D --> |Ban Decisions| E[Firewall Bouncer]
+E --> |Drop Malicious IPs|F{{Home Assistant}}
+C -->|Allowed Traffic| F
 ```
 
 ## nginx
