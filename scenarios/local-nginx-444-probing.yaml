@@ -17,6 +17,7 @@ labels:
   label: "HTTP nginx 444-ERROR"
   classification:
     - attack.T1595
+    - attack.T1190
   spoofable: 0
   service: http
   confidence: 9
