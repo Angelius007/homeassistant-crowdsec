@@ -53,8 +53,6 @@ views:
               👉 Si tu vois des valeurs monter = attaque en cours
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
           - type: markdown
             title: 🧠 SOC Summary
             content: |
@@ -68,8 +66,6 @@ views:
               - Stable = tranquillité
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
           - type: markdown
             title: 🔥 Derniers blocages envoyés au Firewall CrowdSec
             content: >+
