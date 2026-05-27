@@ -1,0 +1,105 @@
+title: Security Center
+views:
+  - title: CrowdSec SOC v2
+    icon: mdi:shield-lock
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.crowdsec_firewall_status
+        show_entity_picture: false
+        icon: mdi:server-security
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.crowdsec_decisions
+        icon: mdi:block-helper
+    type: sections
+    subview: false
+    sections:
+      - type: grid
+        cards:
+          - square: false
+            type: grid
+            columns: 2
+            cards:
+              - graph: line
+                type: sensor
+                entity: sensor.crowdsec_decisions
+                detail: 2
+                icon: mdi:block-helper
+                name: IP bloquées
+                hours_to_show: 48
+              - type: entity
+                entity: sensor.crowdsec_bouncer_status
+                name: Firewall bouncer
+                icon: mdi:firewall
+                state_color: true
+          - type: history-graph
+            title: Activité sécurité (24h)
+            hours_to_show: 24
+            refresh_interval: 60
+            entities:
+              - entity: sensor.crowdsec_decisions
+          - type: markdown
+            title: 🔥 Derniers événements CrowdSec
+            content: |
+              ### État actuel
+              - IP bannies : **{{ states('sensor.crowdsec_decisions') }}**
+              ---
+              👉 Si tu vois des valeurs monter = attaque en cours
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+          - type: markdown
+            title: 🧠 SOC Summary
+            content: |
+              ## CrowdSec Security Overview
+              🛡️ Système actif : oui
+              🚨 Détection : active
+              🔥 Firewall : en protection
+              ---
+              💡 Interprétation :
+              - Decisions ↑ = attaques bloquées 
+              - Stable = tranquillité
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+          - type: markdown
+            title: 🔥 Derniers blocages envoyés au Firewall CrowdSec
+            content: >+
+              ### État actuel
+
+              - Dernière décision : **{{ states('sensor.crowdsec_decisions_raw')
+              }}** 
+
+              {%
+                if states.sensor.crowdsec_decisions_raw is defined
+                and states.sensor.crowdsec_decisions_raw.last_changed is defined
+              %}
+                Mise à jour {{ as_timestamp(states.sensor.crowdsec_decisions_raw.last_changed)  | timestamp_custom('le %d/%m/%Y à %Hh%M',True) }}
+              {% else %}
+                Attente d'une mise à jour
+              {% endif %}
+                
+              - Dernière décision (stream) : **{{
+              states('sensor.crowdsec_decisions_stream_raw') }}**
+
+              {%
+                if states.sensor.crowdsec_decisions_stream_raw is defined
+                and states.sensor.crowdsec_decisions_stream_raw.last_changed is defined
+              %}
+                Mise à jour {{ as_timestamp(states.sensor.crowdsec_decisions_stream_raw.last_changed)  | timestamp_custom('le %d/%m/%Y à %Hh%M',True) }}
+              {% else %}
+                Attente d'une mise à jour
+              {% endif %}
+
+
+              ---
+
+    max_columns: 4
