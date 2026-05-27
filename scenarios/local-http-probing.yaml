@@ -1,15 +1,15 @@
-# 401 / 403 / 400 / 444 local rules
+# 401 / 403 / 400 local rules
 type: leaky
 #debug: true
 name: local/nginx-aggressive-probing
 description: "Detect aggressive nginx probing"
 
-filter: "evt.Meta.http_status in ['401', '403', '400', '444']"
+filter: "evt.Meta.http_status in ['401', '403', '400']"
 
 groupby: "evt.Meta.source_ip"
 
 capacity: 3
-leakspeed: "3m"
+leakspeed: "1h"
 blackhole: 24h
 
 labels:
@@ -21,4 +21,3 @@ labels:
   service: http
   confidence: 7
   duration: 12h
-  
