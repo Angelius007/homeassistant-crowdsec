@@ -1,0 +1,32 @@
+# Bloque scanners connus
+if ($http_user_agent ~* (curl|wget|nikto|sqlmap|masscan|zgrab|nmap)) {
+    return 403;
+}
+
+# Bloque chemins souvent scannés
+location ~* ^/(wp-admin|phpmyadmin|cgi-bin|boaform|\.env|actuator) {
+    return 444;
+}
+
+# Empêche méthodes HTTP inutiles
+if ($request_method !~ ^(GET|POST|HEAD|OPTIONS)$ ) {
+    return 444;
+}
+
+location = /manager/html {
+    return 444;
+}
+
+location = /admin {
+    return 444;
+}
+
+# Bloque accès aux fichiers cachés
+location ~ /\.(?!well-known).* {
+    deny all;
+    access_log off;
+    log_not_found off;
+}
+
+# proection contre les bots
+proxy_hide_header X-Powered-By;
