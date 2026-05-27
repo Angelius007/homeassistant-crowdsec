@@ -21,7 +21,7 @@ Les scenarios sont à déposer sur :
 - /config/.storage/crowdsec/config/scenarios
 
 ### configuration homeassistant pour creer des sensors
-Configuration des "sensor" dans le dépôt homeassistant/
+Configuration des "sensor" dans le répertoie homeassistant/ à ajouter dans le configuration.yaml
 
 ### configuration homeassistant pour creer des dashboards de suivi
-Configuration des "sensor" dans le dépôt dashboards/
+Configuration d'un board de suivi à créer sur les (http://homeassistant.local:8123/config/lovelace/dashboards)
