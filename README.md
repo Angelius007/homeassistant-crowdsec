@@ -1,6 +1,20 @@
 # homeassistant-crowdsec
 
-Liste des personnalisations proposées pour home assistant et crowdsec pour sécuriser les accès à un homeassistant exposé sur internet
+Liste des personnalisations proposées pour home assistant, nginx et crowdsec pour sécuriser les accès à un homeassistant exposé sur internet
+
+## Architecture
+
+Internet
+↓
+Box Interne + éventuel routeur intermédiaire
+↓
+Nginx Proxy Manager
+↓
+CrowdSec
+↓
+Firewall Bouncer
+↓
+Home Assistant
 
 ## nginx
 ### Installation nginx
