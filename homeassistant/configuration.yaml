@@ -1,0 +1,54 @@
+rest:
+    # Recuperation des decisions Crowdsec avec XXXXXXX-crowdsec le nom du serveur local crowdsec
+  - resource: http://XXXXXXX-crowdsec:8080/v1/decisions
+    headers:
+      X-Api-Key: !secret crowdsec_api_key
+      User-Agent: crowdsec-homeassistant-bouncer
+    scan_interval: 60  # toutes les 30 secondes
+    timeout: 30
+    sensor:
+      - name: CrowdSec Decisions raw
+        value_template: >
+          {
+          'id' : '{{ value_json[0].id }}',
+          'origin' : '{{ value_json[0].origin }}',
+          'scenario' : '{{ value_json[0].scenario }}',
+          'scope' : '{{ value_json[0].scope }}',
+          'type' : '{{ value_json[0].type }}',
+          'value' : '{{ value_json[0].value }}'
+          }
+      - name: CrowdSec Decisions
+        value_template: "{{ value_json | length | round(0) }}"
+
+  # Recuperation de l'état du firewall
+  - resource: http://XXXXX-crowdsec:8080/v1/decisions/stream?startup=false
+    headers:
+      X-Api-Key: !secret crowdsec_api_key
+      User-Agent: crowdsec-homeassistant-bouncer
+    timeout: 30
+    scan_interval: 60  # toutes les 60 secondes
+    sensor:
+      - name: CrowdSec Decisions Stream raw
+        value_template: >
+           {% if value_json is defined 
+              and value_json.new is defined
+              and value_json.new[0] is defined
+              and value_json.new[0].id is defined %}
+                  {
+                  'id' : '{{ value_json.new[0].id }}',
+                  'origin' : '{{ value_json.new[0].origin }}',
+                  'scenario' : '{{ value_json.new[0].scenario }}',
+                  'scope' : '{{ value_json.new[0].scope }}',
+                  'type' : '{{ value_json.new[0].type }}',
+                  'value' : '{{ value_json.new[0].value }}'
+                  }
+           {% else %}
+             {{ states('sensor.crowdsec_decisions_stream_raw') }}
+           {% endif %}
+      - name: CrowdSec Bouncer Status
+        value_template: >
+          {% if value_json is defined %}
+            online
+          {% else %}
+            offline
+          {% endif %}
