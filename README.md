@@ -19,3 +19,9 @@ Deux modules à installer :
 ### scenarios personnalisés 
 Les scenarios sont à déposer sur :
 - /config/.storage/crowdsec/config/scenarios
+
+### configuration homeassistant pour creer des sensors
+Configuration des "sensor" dans le dépôt homeassistant/
+
+### configuration homeassistant pour creer des dashboards de suivi
+Configuration des "sensor" dans le dépôt dashboards/
