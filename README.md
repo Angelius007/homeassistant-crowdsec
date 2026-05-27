@@ -29,11 +29,59 @@ Pour installer nginx : https://github.com/hassio-addons/addon-nginx-proxy-manage
 A paramétrer dans la partie "Advanced" du proxy nginx
 
 ## crowdsec
+Deux modules à installer :
+- Crowdsec pour détecter
+- Crowdsec Firewall Bouncer pour bannir les IP
 
 ### Installation crowdsec
-Deux modules à installer :
-- Crowdsec pour détecter : https://github.com/crowdsecurity/home-assistant-addons/blob/main/crowdsec/DOCS.md
-- Crowdsec Firewall Bouncer pour appliquer automatiquement des bans : https://github.com/crowdsecurity/home-assistant-addons/blob/main/crowdsec-firewall-bouncer/DOCS.md
+
+- Documentation Crowdsec : https://github.com/crowdsecurity/home-assistant-addons/blob/main/crowdsec/DOCS.md
+
+Paramétrage à personnaliser :
+
+- Modifier la configuration en vue YAML : 
+```yaml
+acquisition: |
+  --- 
+  source: journalctl
+
+  journalctl_filter: 
+    - "--directory=/var/log/journal/"
+  labels:
+    type: syslog
+
+  --- 
+  source: journalctl
+
+  journalctl_filter: 
+    - "--directory=/var/log/journal/"
+  labels:
+    type: nginx
+  transform:
+  "ReplaceAll(evt.Line.Raw,'addon_a0d7b954_nginxproxymanager','nginx')"
+disable_lapi: false
+remote_lapi_url: ""
+agent_username: ""
+agent_password: ""
+collections:
+  - crowdsecurity/home-assistant
+  - crowdsecurity/nginx
+  - crowdsecurity/nginx-proxy-manager
+parsers: []
+scenarios: []
+postoverflows: []
+parsers_to_disable: []
+scenarios_to_disable: []
+disable_online_api: false
+```
+
+### Installation de Crowdsec Firewall Bouncer
+- **Crowdsec Firewall Bouncer** pour appliquer automatiquement des bans : https://github.com/crowdsecurity/home-assistant-addons/blob/main/crowdsec-firewall-bouncer/DOCS.md
+
+Récupérer le nom du host sur le module Crowdsec (Nom d'hôte : XXXXX-crowdsec)
+- Paramétrer l'URL : http://XXXXX-crowdsec:8080/
+
+Pour la clef d'API, CF la documentation **Crowdsec Firewall Bouncer**
 
 ### scenarios personnalisés 
 Les scenarios sont à déposer sur :
