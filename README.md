@@ -25,3 +25,9 @@ Configuration des "sensor" dans le répertoie homeassistant/ à ajouter dans le 
 
 ### configuration homeassistant pour creer des dashboards de suivi
 Configuration d'un board de suivi à créer sur les (http://homeassistant.local:8123/config/lovelace/dashboards)
+
+### Commandes utiles
+- cscli metrics
+- cscli alerts list
+- cscli decisions list
+- cscli scenarios list
