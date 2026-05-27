@@ -4,17 +4,18 @@ Liste des personnalisations proposées pour home assistant, nginx et crowdsec po
 
 ## Architecture
 
-Internet
-↓
-Box Interne + éventuel routeur intermédiaire
-↓
-Nginx Proxy Manager
-↓
-CrowdSec
-↓
-Firewall Bouncer
-↓
-Home Assistant
+```mermaid
+flowchart LR
+
+A((Internet))
+A --> B1[Box Internet]
+B1 -.-> B2[Eventuel routeur intermédiaire]
+B1 --> C[Nginx Proxy Manager]
+B2 -.-> C[Nginx Proxy Manager]
+C --> D[CrowdSec]
+D --> E[Firewall Bounce]
+E --> F{{Home Assistant}}
+```
 
 ## nginx
 ### Installation nginx
