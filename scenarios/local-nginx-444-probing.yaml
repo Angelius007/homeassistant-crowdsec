@@ -1,0 +1,23 @@
+# 444 local rules
+type: leaky
+#debug: true
+name: local/nginx-444-probing
+description: "Detect aggressive 444 errors nginx probing"
+
+filter: "evt.Meta.http_status in ['444']"
+
+groupby: "evt.Meta.source_ip"
+
+capacity: 2
+leakspeed: "6h"
+blackhole: 24h
+
+labels:
+  remediation: true
+  label: "HTTP nginx 444-ERROR"
+  classification:
+    - attack.T1595
+  spoofable: 0
+  service: http
+  confidence: 9
+  duration: 24h
