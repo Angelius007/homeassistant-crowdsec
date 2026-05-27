@@ -19,5 +19,5 @@ labels:
     - attack.T1595
   spoofable: 0
   service: http
-  confidence: 7
+  confidence: 6
   duration: 12h
