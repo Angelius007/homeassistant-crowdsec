@@ -1,0 +1,23 @@
+# 404 local rules
+type: leaky
+#debug: true
+name: local/nginx-aggressive-404-probing
+description: "Detect aggressive 404 nginx probing"
+
+filter: "evt.Meta.http_status in ['404']"
+
+groupby: "evt.Meta.source_ip"
+
+capacity: 5
+leakspeed: "5m"
+blackhole: 6m
+
+labels:
+  remediation: true
+  label: "HTTP 404 nginx ERROR"
+  classification:
+    - attack.T1595
+  spoofable: 0
+  service: http
+  confidence: 4
+  duration: 12h
