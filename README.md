@@ -83,6 +83,10 @@ Récupérer le nom du host sur le module Crowdsec (Nom d'hôte : XXXXX-crowdsec)
 
 Pour la clef d'API, CF la documentation **Crowdsec Firewall Bouncer**
 
+### Configuration des remediations
+Le fichier de profiles.yaml doit être déposé ici :
+- /config/.storage/crowdsec/config
+
 ### scenarios personnalisés 
 Les scenarios sont à déposer sur :
 - /config/.storage/crowdsec/config/scenarios
