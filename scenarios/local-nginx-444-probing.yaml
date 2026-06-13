@@ -10,7 +10,7 @@ groupby: "evt.Meta.source_ip"
 
 capacity: 2
 leakspeed: "6h"
-blackhole: 24h
+blackhole: 5m
 
 labels:
   remediation: true
